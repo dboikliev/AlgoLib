@@ -1,4 +1,4 @@
-﻿namespace DataStructures
+﻿namespace DataStructures.DisjointSet
 {
     public class DisjointSetNode<T>
     {
