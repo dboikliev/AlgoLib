@@ -1,4 +1,4 @@
-﻿using DataStructures.DisjointSet;
+﻿using DataStructures.Trees;
 using System;
 
 namespace DataStructures.TestClient
@@ -7,15 +7,16 @@ namespace DataStructures.TestClient
     {
         static void Main(string[] args)
         {
-            var set = new DisjointSet<int>();
-            set.Find(100);
-            for (int i = 0; i < 50; i++)
-            {
-                set.MakeSet(i);
-                set.Union(0, i);
-            }
-
-            Console.WriteLine(set.Find(5) == set.Find(20));
+            var trie = new Trie();
+            trie.Insert("Romanus");
+            trie.Insert("Romulus");
+            Console.WriteLine(trie.IsWord("Romanus"));
+            Console.WriteLine(trie.IsWord("Romanu"));
+            Console.WriteLine(trie.IsPrefix("Romanus"));
+            Console.WriteLine(trie.IsWord("Romulus"));
+            trie.Remove("Romulus");
+            Console.WriteLine(trie.IsWord("Romulus"));
+            Console.WriteLine(trie.IsPrefix("Romulus"));
         }
     }
 }

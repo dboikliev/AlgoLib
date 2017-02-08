@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DataStructures.Trie
+namespace DataStructures.Trees
 {
     public class Trie
     {
-        private readonly TrieNode _root;
+        private TrieNode _root;
 
         public Trie()
         {
@@ -23,6 +19,26 @@ namespace DataStructures.Trie
         public bool IsWord(string key)
         {
             return FindNode(key)?.IsWord ?? false;
+        }
+
+        public void Remove(string key)
+        {
+            var node = FindNode(key);
+
+            if (!(node?.IsWord ?? false))
+            {
+                throw new Exception($"{ key } is not a word.");
+            }
+
+            var parent = node.Parent;
+            var nodeToDelete = node;
+            while (parent != _root && parent.Children.Count <= 1)
+            {
+                nodeToDelete = parent;
+                parent = parent.Parent;
+            }
+
+            parent.Children.Remove(nodeToDelete.Key);
         }
 
         private TrieNode FindNode(string key)
@@ -66,11 +82,12 @@ namespace DataStructures.Trie
             while (index < value.Length)
             {
                 var child = new TrieNode();
+                child.Key = value[index];
                 node.Children[value[index]] = child;
+                child.Parent = node;
                 node = child;
                 index++;
             }
-            node.Value = value;
             node.IsWord = true;
         }
     }

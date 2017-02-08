@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 
-namespace DataStructures.Trie
+namespace DataStructures.Trees
 {
 
     public class TrieNode
     {
         public bool IsWord { get; set; }
-        public string Value { get; set; }
+        public char Key { get; set; }
+        public TrieNode Parent { get; set; }
         public Dictionary<char, TrieNode> Children { get; set; }
         public TrieNode()
         {
