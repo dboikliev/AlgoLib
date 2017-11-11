@@ -8,7 +8,7 @@ namespace DataStructures.Trees
         public bool IsWord { get; set; }
         public char Key { get; set; }
         public TrieNode Parent { get; set; }
-        public Dictionary<char, TrieNode> Children { get; set; }
+        public Dictionary<char, TrieNode> Children { get; }
         public TrieNode()
         {
             Children = new Dictionary<char, TrieNode>();
