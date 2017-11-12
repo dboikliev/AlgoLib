@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -7,14 +8,20 @@ namespace AlgoLib.Queues
     public class Deque<T>
     {
         private const int InitialCapacity = 16;
-        
-        //[0, 0, 3, 4, 5, 0, 0, 0];
-        private T[] _elements = new T[InitialCapacity];
+        private T[] _elements;
         private int _head = 0;
         private int _tail = 0;
         private int _count = 0;
 
-        public int Count => _count; 
+        public int Count => _count;
+
+        public Deque(int capacity = InitialCapacity)
+        {
+            if (capacity <= 0)
+                throw new ArgumentOutOfRangeException(nameof(capacity), capacity, $"{nameof(capacity)} must be a positive number.");
+            
+            _elements = new T[capacity];
+        }
         
         public Deque<T> EnqueueFirst(T value)
         {
