@@ -8,11 +8,7 @@ namespace AlgoLib.TestClient
     {
         private static void Main(string[] args)
         {
-            var tree = new BKTree<string>(LevensteinDistance);
-
-            tree.Add("kitten")
-                .Add("mitten")
-                .Add("meat");
+            var tree = new BKTree<string>(LevensteinDistance, "kitten", "mitten", "smitten");
 
             foreach (var str in tree.Query("smitten", 3))
             {

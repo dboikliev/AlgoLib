@@ -4,7 +4,7 @@ using Xunit;
 
 namespace AlgoLib.Tests
 {
-    public class LevensteinDistance
+    public class LevensteinDistanceTests
     {
         [Fact]
         public void Should_ReturnZero_ForEqualStrings()
