@@ -16,9 +16,7 @@ namespace AlgoLib.Queues
         public PriorityQueue(Comparison<T> comparison, int capacity = InitialCapacity)
         {
             if (capacity <= 0)
-            {
-                throw new ArgumentException($"{nameof(capacity)} must be a positive number.", nameof(capacity));
-            }
+                throw new ArgumentOutOfRangeException(nameof(capacity), capacity, $"{nameof(capacity)} must be a positive number.");
             
             _comparison = comparison;
             _elements = new T[capacity];
