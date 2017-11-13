@@ -4,7 +4,7 @@ using System.Linq;
 namespace AlgoLib.Trees
 {
     /// <summary>
-    /// Represents a not in a Bukhard-Kheller tree.
+    /// Represents a not in a Bukhard-Keller tree.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class BKTreeNode<T>

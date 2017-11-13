@@ -6,7 +6,7 @@ namespace AlgoLib.Trees
     public delegate int Metric<T>(T a, T b);
     
     /// <summary>
-    /// Burkhard-Kheller tree. Suitable for elements which for a metric spece.
+    /// Burkhard-Keller tree. Suitable for elements which for a metric spece.
     /// </summary>
     /// <typeparam name="T">The type of the elements.</typeparam>
     public class BKTree<T>
@@ -15,7 +15,7 @@ namespace AlgoLib.Trees
         private BKTreeNode<T> _root;
 
         /// <summary>
-        /// Constructs a Bukhard-Kheller tree.
+        /// Constructs a Bukhard-Keller tree.
         /// </summary>
         /// <param name="metric">A function which is a metric on <typeparamref name="T"/>.</param>
         public BKTree(Metric<T> metric): 
@@ -24,7 +24,7 @@ namespace AlgoLib.Trees
         }
         
         /// <summary>
-        /// Constructs a Bukhard-Kheller tree.
+        /// Constructs a Bukhard-Keller tree.
         /// </summary>
         /// <param name="metric">A function which is a metric on <typeparamref name="T"/>.</param>
         /// <param name="elements">Elements to be added to the tree.</param>
@@ -34,7 +34,7 @@ namespace AlgoLib.Trees
         }
         
         /// <summary>
-        /// Constructs a Bukhard-Kheller tree.
+        /// Constructs a Bukhard-Keller tree.
         /// </summary>
         /// <param name="metric">A function which is a metric on <typeparamref name="T"/>.</param>
         /// <param name="elements">Elements to be added to the tree.</param>
