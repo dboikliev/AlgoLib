@@ -169,7 +169,7 @@ namespace AlgoLib.Tests
         {
             var deque = new Deque<int>();
 
-            var numbers = Enumerable.Range(1, 60);
+            var numbers = Enumerable.Range(1, 60).ToArray();
             foreach (var x in numbers)
             {
                 deque.EnqueueFirst(x);
@@ -190,7 +190,7 @@ namespace AlgoLib.Tests
         {
             var deque = new Deque<int>();
 
-            var numbers = Enumerable.Range(1, 60);
+            var numbers = Enumerable.Range(1, 60).ToArray();
             foreach (var x in numbers)
             {
                 deque.EnqueueFirst(x);
@@ -211,13 +211,13 @@ namespace AlgoLib.Tests
         {
             var deque = new Deque<int>();
 
-            var numbers = Enumerable.Range(1, 60);
+            var numbers = Enumerable.Range(1, 60).ToArray();
             foreach (var x in numbers)
             {
                 deque.EnqueueFirst(x);
             }
 
-            Assert.Equal(numbers.Count(), deque.Count);
+            Assert.Equal(numbers.Length, deque.Count);
         }
         
         [Fact]
@@ -225,13 +225,13 @@ namespace AlgoLib.Tests
         {
             var deque = new Deque<int>();
 
-            var numbers = Enumerable.Range(1, 60);
+            var numbers = Enumerable.Range(1, 60).ToArray();
             foreach (var x in numbers)
             {
                 deque.EnqueueLast(x);
             }
 
-            Assert.Equal(numbers.Count(), deque.Count);
+            Assert.Equal(numbers.Length, deque.Count);
         }
 
     }
