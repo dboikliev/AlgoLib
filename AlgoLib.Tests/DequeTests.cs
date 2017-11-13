@@ -17,6 +17,34 @@ namespace AlgoLib.Tests
         }
         
         [Fact]
+        public void Count_ShouldBeSameAsEnqueuedNumberOfElementsAfterEnqueueFirst()
+        {
+            var deque = new Deque<int>();
+
+            var numbers = Enumerable.Range(1, 60).ToArray();
+            foreach (var x in numbers)
+            {
+                deque.EnqueueFirst(x);
+            }
+
+            Assert.Equal(numbers.Length, deque.Count);
+        }
+        
+        [Fact]
+        public void Count_ShouldBeSameAsEnqueuedNumberOfElementsAfterEnqueueLast()
+        {
+            var deque = new Deque<int>();
+
+            var numbers = Enumerable.Range(1, 60).ToArray();
+            foreach (var x in numbers)
+            {
+                deque.EnqueueLast(x);
+            }
+
+            Assert.Equal(numbers.Length, deque.Count);
+        }
+        
+        [Fact]
         public void Dequeue_ShouldReturnInsertedElement_WhenCalledAfterEnqueue()
         {
             var deque = new Deque<int>();
@@ -204,34 +232,6 @@ namespace AlgoLib.Tests
             }
             
             Assert.Equal(numbers, elements);
-        }
-        
-        [Fact]
-        public void Count_ShouldBeSameAsEnqueuedNumberOfElementsAfterEnqueueFirst()
-        {
-            var deque = new Deque<int>();
-
-            var numbers = Enumerable.Range(1, 60).ToArray();
-            foreach (var x in numbers)
-            {
-                deque.EnqueueFirst(x);
-            }
-
-            Assert.Equal(numbers.Length, deque.Count);
-        }
-        
-        [Fact]
-        public void Count_ShouldBeSameAsEnqueuedNumberOfElementsAfterEnqueueLast()
-        {
-            var deque = new Deque<int>();
-
-            var numbers = Enumerable.Range(1, 60).ToArray();
-            foreach (var x in numbers)
-            {
-                deque.EnqueueLast(x);
-            }
-
-            Assert.Equal(numbers.Length, deque.Count);
         }
     }
 }
