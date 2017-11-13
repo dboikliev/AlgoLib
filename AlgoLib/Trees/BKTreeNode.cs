@@ -3,6 +3,10 @@ using System.Linq;
 
 namespace AlgoLib.Trees
 {
+    /// <summary>
+    /// Represents a not in a Bukhard-Kheller tree.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class BKTreeNode<T>
     {
         private readonly Metric<T> _metric;
@@ -16,7 +20,13 @@ namespace AlgoLib.Trees
             Value = value;
         }
 
-        public void Add(T value)
+        
+        /// <summary>
+        /// Adds a child node with a specified.
+        /// </summary>
+        /// <param name="value">The value of the child node.</param>
+        /// <returns>The node.</returns>
+        public BKTreeNode<T> Add(T value)
         {
             var current = this;
             var distance = _metric(current.Value, value);
@@ -26,8 +36,17 @@ namespace AlgoLib.Trees
             }
             
             current._children[distance] = new BKTreeNode<T>(value, _metric);
+
+            return this;
         }
         
+        /// <summary>
+        /// Queries the node and its children for elements which are within distance
+        /// of <paramref name="maxDistance"/> from <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">The element to be queried.</param>
+        /// <param name="maxDistance">The maximum allowed distance for the returned elements.</param>
+        /// <returns>The elements within distance of <paramref name="maxDistance"/> from <paramref name="value"/>.</returns>
         public IEnumerable<T> Query(T value, int maxDistance)
         {
             var queue = new Queue<BKTreeNode<T>>();
