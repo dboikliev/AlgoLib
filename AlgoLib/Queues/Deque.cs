@@ -11,9 +11,8 @@ namespace AlgoLib.Queues
         private T[] _elements;
         private int _head = 0;
         private int _tail = 0;
-        private int _count = 0;
 
-        public int Count => _count;
+        public int Count { get; private set; } = 0;
 
         public Deque(int capacity = InitialCapacity)
         {
@@ -25,49 +24,41 @@ namespace AlgoLib.Queues
         
         public Deque<T> EnqueueFirst(T value)
         {
-            if (_count + 1 >= _elements.Length)
+            if (Count + 1 >= _elements.Length)
                 Resize();
             
-            if (_count > 0)
-            {
-                _head--;
-                if (_head < 0)
-                {
-                    _head = _elements.Length - 1;
-                }
-            }
+            if (Count > 0)
+                _head = _head > 0 ? _head - 1 : _elements.Length - 1;
                 
             _elements[_head] = value;
-            _count++;
+            Count++;
 
             return this;
         }
 
         public T DequeueFirst()
         {
-            if (_count == 0)
+            if (Count == 0)
                 throw new InvalidOperationException("The queue is empty.");
 
             var result = _elements[_head];
             
-            if (_count > 0)
-                _head = (_head + 1) % _elements.Length;
+            Count--;
+            _head = (_head + 1) % _elements.Length;
             
-            _count--;
             return result;
         }
         
         public Deque<T> EnqueueLast(T value)
         {
-            
-            if (_count + 1 >= _elements.Length)
+            if (Count + 1 >= _elements.Length)
                 Resize();
 
-            if (_count > 0)
+            if (Count > 0)
                 _tail = (_tail + 1) % _elements.Length;
             
             _elements[_tail] = value;
-            _count++;
+            Count++;
 
             return this;
         }
@@ -75,18 +66,12 @@ namespace AlgoLib.Queues
         public T DequeueLast()
         {
             if (Count == 0)
-            {
                 throw new InvalidOperationException("The queue is empty.");
-            }
 
             var result = _elements[_tail];
 
-            _count--;
-            _tail--;
-            if (_tail < 0)
-            {
-                _tail = _elements.Length - 1;
-            }
+            Count--;
+            _tail = _tail > 0 ? _tail - 1 : _elements.Length - 1;
 
             return result;
         }
@@ -101,7 +86,7 @@ namespace AlgoLib.Queues
             _elements = resized;
 
             _head = 0;
-            _tail = _count - 1;
+            _tail = Count - 1;
         }
     }
 }
