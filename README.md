@@ -1,7 +1,7 @@
 # AlgoLib
 Different structures implemented in C#.
 
-## Implemented structures:
+#### Implemented structures:
 
 * [BK-Tree (Bukhard-Keller tree)](https://en.wikipedia.org/wiki/BK-tree)
 * [Trie](https://en.wikipedia.org/wiki/Trie)
