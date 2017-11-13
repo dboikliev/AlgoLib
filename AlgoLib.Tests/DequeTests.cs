@@ -233,6 +233,5 @@ namespace AlgoLib.Tests
 
             Assert.Equal(numbers.Length, deque.Count);
         }
-
     }
 }
