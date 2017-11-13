@@ -12,7 +12,7 @@ namespace AlgoLib.Queues
         private int _head = 0;
         private int _tail = 0;
 
-        public int Count { get; private set; } = 0;
+        public int Count { get; private set; }
 
         public Deque(int capacity = InitialCapacity)
         {
@@ -44,7 +44,9 @@ namespace AlgoLib.Queues
             var result = _elements[_head];
             
             Count--;
-            _head = (_head + 1) % _elements.Length;
+            
+            if (Count > 0)
+                _head = (_head + 1) % _elements.Length;
             
             return result;
         }
@@ -71,7 +73,9 @@ namespace AlgoLib.Queues
             var result = _elements[_tail];
 
             Count--;
-            _tail = _tail > 0 ? _tail - 1 : _elements.Length - 1;
+            
+            if (Count > 0)
+                _tail = _tail > 0 ? _tail - 1 : _elements.Length - 1;
 
             return result;
         }
