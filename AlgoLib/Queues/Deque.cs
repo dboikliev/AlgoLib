@@ -25,7 +25,7 @@ namespace AlgoLib.Queues
         
         public Deque<T> EnqueueFirst(T value)
         {
-            if (_count + 1>= _elements.Length)
+            if (_count + 1 >= _elements.Length)
                 Resize();
             
             if (_count > 0)
@@ -45,10 +45,9 @@ namespace AlgoLib.Queues
 
         public T DequeueFirst()
         {
-            if (Count == 0)
-            {
+            if (_count == 0)
                 throw new InvalidOperationException("The queue is empty.");
-            }
+
             var result = _elements[_head];
             
             if (_count > 0)
@@ -96,17 +95,8 @@ namespace AlgoLib.Queues
         {
             var resized = new T[_elements.Length * 2];
 
-            int added = 0;
-            for (int i = _head; i < _elements.Length; i++)
-            {
-                resized[i - _head] = _elements[i];
-                added++;
-            }
-            
-            for (int i = 0; i < _head; i++)
-            {
-                resized[i + added] = _elements[i];
-            }
+            Array.ConstrainedCopy(_elements, _head, resized, 0, _elements.Length - _head);
+            Array.ConstrainedCopy(_elements, 0, resized, _elements.Length - _head, _head);
 
             _elements = resized;
 
