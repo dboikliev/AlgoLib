@@ -12,19 +12,19 @@ namespace AlgoLib.Functions
 
             if (b.Length == 0)
                 return a.Length;
-            
+
             if (a.Length == b.Length)
                 return HammingDistance(a, b);
-            
+
             var matrix = new int[a.Length + 1][];
 
-            for (var row = 0; row < matrix.Length; row++)
+            for (var row = 1; row < matrix.Length; row++)
             {
                 matrix[row] = new int[b.Length + 1];
                 matrix[row][0] = row;
             }
 
-            for (var col = 0; col < matrix[0].Length; col++)
+            for (var col = 1; col < matrix[0].Length; col++)
             {
                 matrix[0][col] = col;
             }
@@ -51,11 +51,10 @@ namespace AlgoLib.Functions
         {
             if (a.Length != b.Length)
                 throw new InvalidOperationException($"{nameof(a)} and {nameof(b)} must be of equal length.");
-            
-            return a.Zip(b, (cA, cB) => cA == cB ? 0 : 1).Sum();            
+
+            return a.Zip(b, (cA, cB) => cA == cB ? 0 : 1).Sum();
         }
 
-        private static int Min(params int[] numbers) 
-            => numbers.Min();
+        private static int Min(params int[] numbers) => numbers.Min();
     }
 }
