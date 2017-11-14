@@ -35,8 +35,12 @@ namespace AlgoLib.Functions
                 {
                     var subtitutions = a[row - 1] == b[col - 1] ? 0 : 1;
 
-                    matrix[row][col] = Min(matrix[row - 1][col] + 1, matrix[row][col - 1],
-                        matrix[row - 1][col - 1] + subtitutions);
+                    matrix[row][col] = Min
+                    (
+                        matrix[row - 1][col] + 1, //deletions
+                        matrix[row][col - 1] + 1, //insetions
+                        matrix[row - 1][col - 1] + subtitutions //substitution
+                    );
                 }
             }
 

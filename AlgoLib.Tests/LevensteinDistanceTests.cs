@@ -35,5 +35,20 @@ namespace AlgoLib.Tests
             int distance = EditDistance.LevensteinDistance("sitting", "kitten");
             Assert.Equal(3, distance);
         }
+        
+        [Fact]
+        public void Should_Return3_ForSmiteAndTree()
+        {
+            int distance = EditDistance.LevensteinDistance("smite", "tree");
+            Assert.Equal(4, distance);
+        }
+        
+         
+        [Fact]
+        public void Should_Return3_ForSmiteAndTee()
+        {
+            int distance = EditDistance.LevensteinDistance("smite", "tee");
+            Assert.Equal(4, distance);
+        }
     }
 }
