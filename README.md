@@ -1,5 +1,11 @@
 # AlgoLib
-Different structures implemented in C#.
+
+A library of data structures which are not available provided with .NET's standard library.
+
+## Motivation:
+
+* To expand my knowledge on data structures and algorithms
+* To make my .NET developers lives easier by providing a set of powerful data structures
 
 ## Implemented structures:
 
