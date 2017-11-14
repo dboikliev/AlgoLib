@@ -5,7 +5,7 @@ A library of data structures which are not available provided with .NET's standa
 ## Motivation:
 
 * To expand my knowledge on data structures and algorithms
-* To make my .NET developers lives easier by providing a set of powerful data structures
+* To make .NET developers' lives easier by providing a set of powerful data structures
 
 ## Implemented structures:
 
