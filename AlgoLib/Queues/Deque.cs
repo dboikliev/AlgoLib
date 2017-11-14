@@ -1,7 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 
 namespace AlgoLib.Queues
 {
@@ -18,18 +15,18 @@ namespace AlgoLib.Queues
         {
             if (capacity <= 0)
                 throw new ArgumentOutOfRangeException(nameof(capacity), capacity, $"{nameof(capacity)} must be a positive number.");
-            
+
             _elements = new T[capacity];
         }
-        
+
         public Deque<T> EnqueueFirst(T value)
         {
             if (Count + 1 >= _elements.Length)
                 Resize();
-            
+
             if (Count > 0)
                 _head = _head > 0 ? _head - 1 : _elements.Length - 1;
-                
+
             _elements[_head] = value;
             Count++;
 
@@ -42,15 +39,15 @@ namespace AlgoLib.Queues
                 throw new InvalidOperationException("The queue is empty.");
 
             var result = _elements[_head];
-            
+
             Count--;
-            
+
             if (Count > 0)
                 _head = (_head + 1) % _elements.Length;
-            
+
             return result;
         }
-        
+
         public Deque<T> EnqueueLast(T value)
         {
             if (Count + 1 >= _elements.Length)
@@ -58,7 +55,7 @@ namespace AlgoLib.Queues
 
             if (Count > 0)
                 _tail = (_tail + 1) % _elements.Length;
-            
+
             _elements[_tail] = value;
             Count++;
 
@@ -73,7 +70,7 @@ namespace AlgoLib.Queues
             var result = _elements[_tail];
 
             Count--;
-            
+
             if (Count > 0)
                 _tail = _tail > 0 ? _tail - 1 : _elements.Length - 1;
 
