@@ -1,6 +1,6 @@
 # AlgoLib
 
-A library of data structures which are not available provided with .NET's standard library.
+A library of data structures which are not provided with .NET's standard library.
 
 ## Motivation:
 
