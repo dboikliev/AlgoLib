@@ -18,7 +18,7 @@ namespace AlgoLib.Functions
 
             var matrix = new int[a.Length + 1][];
 
-            for (var row = 1; row < matrix.Length; row++)
+            for (var row = 0; row < matrix.Length; row++)
             {
                 matrix[row] = new int[b.Length + 1];
                 matrix[row][0] = row;
