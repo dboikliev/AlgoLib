@@ -6,7 +6,7 @@ using Xunit;
 
 namespace AlgoLib.Tests
 {
-    public class PriorityDeque
+    public class PriorityDequeTests
     {
         [Fact]
         public void Enqueue_ShouldIncreaseCounBy1_WhenCalled()
