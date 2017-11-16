@@ -1,4 +1,5 @@
 ﻿using System;
+using AlgoLib.Queues;
 using AlgoLib.Trees;
 using static AlgoLib.Functions.EditDistance;
 
@@ -8,16 +9,13 @@ namespace AlgoLib.TestClient
     {
         private static void Main(string[] args)
         {
-            var tree = new BKTree<string>(LevensteinDistance, "kitten", "mitten", "smitten");
+            var pd = new PriorityDeque<int>((a, b) => a - b);
 
-            tree.Add("tree").Add("fee").Add("tee").Add("party").Add("smarty");
+            pd.Enqueue(3).Enqueue(20).Enqueue(1);
 
-            var query = "smite";
-            foreach (var str in tree.Query(query, 4))
-            {
-                Console.WriteLine(str);
-                Console.WriteLine(LevensteinDistance(query, str));
-            }
+            Console.WriteLine(pd.DequeueMax());
+            Console.WriteLine(pd.DequeueMax());
+            Console.WriteLine(pd.DequeueMax());
         }
     }
 }
