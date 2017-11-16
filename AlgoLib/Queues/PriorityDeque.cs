@@ -22,7 +22,7 @@ namespace AlgoLib.Queues
         
         private PriorityDequeNode<T>[] _elements;
         
-        public int Count { get; private set; };
+        public int Count { get; private set; }
 
         public PriorityDeque(int capacity = InitialCapacity)
             => _elements = new PriorityDequeNode<T>[capacity];
