@@ -72,11 +72,10 @@ namespace AlgoLib.Queues
             _elements[1] = last;
 
             var current = 1;
-            var isRunning = true;
             
+            var isRunning = true;
             while (isRunning)
             {
-                isRunning = false;
 
                 var original = current;
                 var leftIndex = current * 2;
@@ -92,10 +91,10 @@ namespace AlgoLib.Queues
                     current = rightIndex;
                 }
 
-                if (current != original)
+                isRunning = current != original;
+                if (isRunning)
                 {
                     _elements.Swap(current, original);
-                    isRunning = true;
                 }
             }
 
