@@ -8,13 +8,19 @@ namespace AlgoLib.Functions
         public static int LevensteinDistance(string a, string b)
         {
             if (a.Length == 0)
+            {
                 return b.Length;
+            }
 
             if (b.Length == 0)
+            {
                 return a.Length;
+            }
 
             if (a.Length == b.Length)
-                return HammingDistance(a, b);
+            {
+                HammingDistance(a, b);
+            }
 
             var matrix = new int[a.Length + 1][];
 
@@ -50,7 +56,9 @@ namespace AlgoLib.Functions
         public static int HammingDistance(string a, string b)
         {
             if (a.Length != b.Length)
+            {
                 throw new InvalidOperationException($"{nameof(a)} and {nameof(b)} must be of equal length.");
+            }
 
             return a.Zip(b, (cA, cB) => cA == cB ? 0 : 1).Sum();
         }
