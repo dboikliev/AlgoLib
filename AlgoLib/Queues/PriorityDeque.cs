@@ -24,9 +24,8 @@ namespace AlgoLib.Queues
         private readonly Comparison<T> _comparison;
         private PriorityDequeNode<T>[] _elements;
         private int _pointer = 1;
-        private int _count = 0;
 
-        public int Count => _count;
+        public int Count { get; private set; } = 0;
 
         public PriorityDeque(Comparison<T> comparison, int capacity = InitialCapacity)
         {
@@ -36,20 +35,20 @@ namespace AlgoLib.Queues
 
         public T DequeueMin()
         {
-            if (_count == 0)
+            if (Count == 0)
             {
                 throw new InvalidOperationException("The queue is empty.");
             }
          
             var result = _elements[1].Min;
             
-            _count--;
+            Count--;
 
             _elements[1].Min = _elements[_pointer].Min;
 
             SiftDownMin();
 
-            if (_count % 2 == 0)
+            if (Count % 2 == 0)
             {
                 if (_pointer > 1)
                 {
@@ -58,14 +57,16 @@ namespace AlgoLib.Queues
                 }
             }
             else
+            {
                 _elements[_pointer].Min = _elements[_pointer].Max;
+            }
 
             return result;
         }
 
         public T DequeueMax()
         {
-            if (_count == 0)
+            if (Count == 0)
             {
                 throw new InvalidOperationException("The queue is empty.");
             }
@@ -76,23 +77,44 @@ namespace AlgoLib.Queues
 
             SiftDownMax();
             
-            _count--;
+            Count--;
 
-            if (_count % 2 == 0)
+            if (Count % 2 == 0)
             {
                 if (_pointer > 1)
                 {
                     _elements[_pointer] = null;
                     _pointer--;
                 }
-                
             }
             else
+            {
                 _elements[_pointer].Max = _elements[_pointer].Min;
+            }
             
             return result;
         }
 
+        public T PeekMin()
+        {
+            if (Count == 0)
+            {
+                throw new InvalidOperationException("The queue is empty.");
+            }
+
+            return _elements[1].Min;
+        }
+
+        public T PeekMax()
+        {
+            if (Count == 0)
+            {
+                throw new InvalidOperationException("The queue is empty.");
+            }
+
+            return _elements[1].Max;
+        }
+        
         private void SiftDownMin()
         {
             var isRunning = true;
@@ -155,7 +177,7 @@ namespace AlgoLib.Queues
 
         public PriorityDeque<T> Enqueue(T value)
         {   
-            if (_count >= 2 && _count % 2 == 0)
+            if (Count >= 2 && Count % 2 == 0)
                 _pointer++;
             
             if (_pointer == _elements.Length)
@@ -163,7 +185,7 @@ namespace AlgoLib.Queues
                 Array.Resize(ref _elements, _elements.Length * 2);
             }
             
-            if (_count % 2 == 0)
+            if (Count % 2 == 0)
             {
                 _elements[_pointer] = new PriorityDequeNode<T>(value);
                 
@@ -192,7 +214,7 @@ namespace AlgoLib.Queues
                 }
             }
 
-            _count++;
+            Count++;
             
             return this;
         }
@@ -210,7 +232,7 @@ namespace AlgoLib.Queues
                 current /= 2;
             }
             
-            if (_count % 2 == 0)
+            if (Count % 2 == 0)
                 _elements[_pointer].Min = _elements[_pointer].Max;
         }
 
@@ -227,7 +249,7 @@ namespace AlgoLib.Queues
                 current /= 2;
             }
 
-            if (_count % 2 == 0)
+            if (Count % 2 == 0)
                 _elements[_pointer].Max = _elements[_pointer].Min;
         }
     }
