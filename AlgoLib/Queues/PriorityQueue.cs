@@ -76,7 +76,6 @@ namespace AlgoLib.Queues
             var isRunning = true;
             while (isRunning)
             {
-
                 var original = current;
                 var leftIndex = current * 2;
                 var rightIndex = current * 2 + 1;
