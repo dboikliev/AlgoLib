@@ -13,4 +13,5 @@ A library of data structures which are not provided by .NET Framework.
 * [Trie](https://en.wikipedia.org/wiki/Trie)
 * [Disjoint-set](https://en.wikipedia.org/wiki/Disjoint-set_data_structure)
 * [Priority queue](https://en.wikipedia.org/wiki/Priority_queue)
-* [Deque (Double-ended queue)](https://en.wikipedia.org/wiki/Double-ended_queue)
+* [Deque (double-ended queue)](https://en.wikipedia.org/wiki/Double-ended_queue)
+* [Priority deque (double-ended priority queue)](https://en.wikipedia.org/wiki/Double-ended_priority_queue)
