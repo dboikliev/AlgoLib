@@ -1,13 +1,12 @@
 ﻿using System;
 using AlgoLib.Queues;
 using AlgoLib.Trees;
-using static AlgoLib.Functions.EditDistance;
 
 namespace AlgoLib.TestClient
 {
     internal static class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             var pd = new PriorityDeque<int>((a, b) => a - b);
 
@@ -16,6 +15,14 @@ namespace AlgoLib.TestClient
             Console.WriteLine(pd.DequeueMax());
             Console.WriteLine(pd.DequeueMax());
             Console.WriteLine(pd.DequeueMax());
+            
+            KDTree<int> points = new KDTree<int>(new []
+            {
+                new[] { 1, 2 }, 
+                new[] { 2, 2 },
+                new[] { 3, 2 }, 
+                new[] { 5, 4 }
+            }, 2);
         }
     }
 }

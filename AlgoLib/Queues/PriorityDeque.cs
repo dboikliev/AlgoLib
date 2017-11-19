@@ -5,18 +5,12 @@ namespace AlgoLib.Queues
 {
     public class PriorityDeque<T>
     {
-        class PriorityDequeNode<T>
+        private class PriorityDequeNode<T>
         {
             public T Min;
             public T Max;
 
             public PriorityDequeNode(T minMax) => Min = Max = minMax;
-
-            public PriorityDequeNode(T min, T max)
-            {
-                Min = min;
-                Max = max;
-            }
         }
         
         private const int InitialCapacity = 16;
