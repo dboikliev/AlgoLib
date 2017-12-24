@@ -5,42 +5,82 @@ using System.Linq;
 
 namespace AlgoLib.Trees
 {
-    public class KDTree<T>
+    public class KdTree<T> where T : IComparable<T>
     {
-        private class KDTreeNode<T>
+        private class KdTreeNode<T>
         {
             public T[] Value { get; }
             
-            public KDTreeNode<T> Left { get; set; }
-            public KDTreeNode<T> Right { get; set; }
+            public KdTreeNode<T> Left { get; set; }
+            public KdTreeNode<T> Right { get; set; }
 
-            public KDTreeNode(T[] value)
+            public KdTreeNode(T[] value)
             {
                 Value = value;
             }
         }
 
-        private KDTreeNode<T> _root;
+        private readonly int _k;
+        private readonly KdTreeNode<T> _root;
         
-        public KDTree(IEnumerable<T[]> elements, int k)
+        public KdTree(IEnumerable<T[]> elements, int k)
         {
+            _k = k;
             _root = ConstructTree(elements, k, 0);
         }
 
-        private KDTreeNode<T> ConstructTree(IEnumerable<T[]> elements, int k, int depth)
+        public void Add(T[] element)
         {
-            var axis = depth % k;
+            Add(element, 0);
+        }
 
-            var sorted = elements.OrderBy(x => x[axis]).ToArray();
+        public T[][] FindNearest(T[] element, Func<T[], T[], int> distanceFunc)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Add(T[] element, int depth)
+        {
+            int axis = depth % _k;
+            KdTreeNode<T> current = _root;
+            KdTreeNode<T> parent = current;
+
+            while (current != null)
+            {
+                int comparison = current.Value[axis].CompareTo(element[axis]);
+
+                current = comparison <= 0 ? current.Left : current.Right;
+                
+                parent = current;
+
+                depth++;
+                axis = depth % _k;
+            }
+
+            if (parent.Value[axis].CompareTo(element[axis]) <= 0)
+            {
+                parent.Left = new KdTreeNode<T>(element);
+            }
+            else
+            {
+                parent.Right = new KdTreeNode<T>(element);
+            }
+        }
+
+        private KdTreeNode<T> ConstructTree(IEnumerable<T[]> elements, int k, int depth)
+        {
+            int axis = depth % k;
+
+            T[][] sorted = elements.OrderBy(x => x[axis]).ToArray();
 
             if (sorted.Length == 0)
             {
                 return null;
             }
             
-            var median = sorted[sorted.Length / 2];
+            T[] median = sorted[sorted.Length / 2];
 
-            var node = new KDTreeNode<T>(median)
+            var node = new KdTreeNode<T>(median)
             {
                 Left = ConstructTree(new ArraySegment<T[]>(sorted, 0, sorted.Length / 2), k, depth + 1),
                 Right = ConstructTree(new ArraySegment<T[]>(sorted, sorted.Length / 2, sorted.Length / 2), k,
