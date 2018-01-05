@@ -7,14 +7,14 @@ namespace AlgoLib.Trees
 {
     public class KdTree<T> where T : IComparable<T>
     {
-        private class KdTreeNode<T>
+        private class KdTreeNode<K>
         {
-            public T[] Value { get; }
+            public K[] Value { get; }
             
-            public KdTreeNode<T> Left { get; set; }
-            public KdTreeNode<T> Right { get; set; }
+            public KdTreeNode<K> Left { get; set; }
+            public KdTreeNode<K> Right { get; set; }
 
-            public KdTreeNode(T[] value)
+            public KdTreeNode(K[] value)
             {
                 Value = value;
             }

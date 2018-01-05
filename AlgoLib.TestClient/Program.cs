@@ -15,6 +15,7 @@ namespace AlgoLib.TestClient
             Console.WriteLine(pd.DequeueMax());
             Console.WriteLine(pd.DequeueMax());
             Console.WriteLine(pd.DequeueMax());
+            Console.WriteLine(pd.DequeueMax());
             
             KdTree<int> points = new KdTree<int>(new []
             {
