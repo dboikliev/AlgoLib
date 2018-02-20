@@ -7,21 +7,21 @@ namespace AlgoLib.Trees
 {
     public class KdTree<T> where T : IComparable<T>
     {
-        private class KdTreeNode<K>
+        private class KdTreeNode
         {
-            public K[] Value { get; }
+            public T[] Value { get; }
             
-            public KdTreeNode<K> Left { get; set; }
-            public KdTreeNode<K> Right { get; set; }
+            public KdTreeNode Left { get; set; }
+            public KdTreeNode Right { get; set; }
 
-            public KdTreeNode(K[] value)
+            public KdTreeNode(T[] value)
             {
                 Value = value;
             }
         }
 
         private readonly int _k;
-        private readonly KdTreeNode<T> _root;
+        private readonly KdTreeNode _root;
         
         public KdTree(IEnumerable<T[]> elements, int k)
         {
@@ -42,8 +42,8 @@ namespace AlgoLib.Trees
         private void Add(T[] element, int depth)
         {
             int axis = depth % _k;
-            KdTreeNode<T> current = _root;
-            KdTreeNode<T> parent = current;
+            KdTreeNode current = _root;
+            KdTreeNode parent = current;
 
             while (current != null)
             {
@@ -59,15 +59,15 @@ namespace AlgoLib.Trees
 
             if (parent.Value[axis].CompareTo(element[axis]) <= 0)
             {
-                parent.Left = new KdTreeNode<T>(element);
+                parent.Left = new KdTreeNode(element);
             }
             else
             {
-                parent.Right = new KdTreeNode<T>(element);
+                parent.Right = new KdTreeNode(element);
             }
         }
 
-        private KdTreeNode<T> ConstructTree(IEnumerable<T[]> elements, int k, int depth)
+        private KdTreeNode ConstructTree(IEnumerable<T[]> elements, int k, int depth)
         {
             int axis = depth % k;
 
@@ -80,7 +80,7 @@ namespace AlgoLib.Trees
             
             T[] median = sorted[sorted.Length / 2];
 
-            var node = new KdTreeNode<T>(median)
+            var node = new KdTreeNode(median)
             {
                 Left = ConstructTree(new ArraySegment<T[]>(sorted, 0, sorted.Length / 2), k, depth + 1),
                 Right = ConstructTree(new ArraySegment<T[]>(sorted, sorted.Length / 2, sorted.Length / 2), k,
