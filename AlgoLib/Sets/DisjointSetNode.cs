@@ -1,4 +1,4 @@
-﻿namespace DataStructures.Sets
+﻿namespace AlgoLib.Sets
 {
     public class DisjointSetNode<T>
     {

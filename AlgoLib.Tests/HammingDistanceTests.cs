@@ -1,5 +1,5 @@
 ﻿using System;
-using AlgoLib.Functions;
+using AlgoLib.Algorithms;
 using Xunit;
 
 namespace AlgoLib.Tests

@@ -1,9 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace DataStructures.Trees
+namespace AlgoLib.Trees
 {
     public class Trie
     {
+        private class TrieNode
+        {
+            public bool IsWord { get; set; }
+            public char Key { get; set; }
+            public TrieNode Parent { get; set; }
+            public Dictionary<char, TrieNode> Children { get; }
+            public TrieNode()
+            {
+                Children = new Dictionary<char, TrieNode>();
+            }
+        }
+        
         private TrieNode _root;
 
         public Trie()

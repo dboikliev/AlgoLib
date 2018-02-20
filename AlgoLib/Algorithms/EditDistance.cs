@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace AlgoLib.Functions
+namespace AlgoLib.Algorithms
 {
     public static class EditDistance
     {
