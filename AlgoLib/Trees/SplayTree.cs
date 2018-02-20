@@ -6,8 +6,6 @@ namespace AlgoLib.Trees
     {
         public class SplayTreeNode
         {
-            public long Sum { get; set; }
-            
             public T Value { get; }
 
             public SplayTreeNode Left { get; set; }
@@ -17,7 +15,6 @@ namespace AlgoLib.Trees
             public SplayTreeNode(T value)
             {
                 Value = value;
-                Sum = (value as long?) ?? 0;
             }
         }
 
@@ -85,11 +82,6 @@ namespace AlgoLib.Trees
 
             newNode.Parent = node;
             return newNode;
-        }
-
-        private long GetSum(SplayTreeNode node)
-        {
-            return node == null ? 0 : node.Sum;
         }
 
         private SplayTreeNode FindClosest(T value)
