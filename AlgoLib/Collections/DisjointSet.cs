@@ -5,6 +5,18 @@ namespace AlgoLib.Collections
 {
     public class DisjointSet<T>
     {
+        private class DisjointSetNode<T>
+        {
+            public DisjointSetNode<T> Parent { get; set; }
+            public int Rank { get; set; } = 1;
+            public T Value { get; }
+
+            public DisjointSetNode(T value)
+            {
+                Value = value;
+            }
+        }
+        
         private Dictionary<T, DisjointSetNode<T>> _nodes = new Dictionary<T, DisjointSetNode<T>>();
 
         public void MakeSet(T value)
@@ -19,19 +31,9 @@ namespace AlgoLib.Collections
             _nodes[value] = node;
         }
 
-        public DisjointSetNode<T> Find(T value)
+        public bool Contains(T value)
         {
-            DisjointSetNode<T> current;
-
-            if (_nodes.TryGetValue(value, out current))
-            {
-                if (current != current.Parent)
-                {
-                    current.Parent = Find(current.Parent.Value);
-                }
-                return current.Parent;
-            }
-            return null;
+            return Find(value) != null;
         }
 
         public void Union(T first, T second)
@@ -54,6 +56,19 @@ namespace AlgoLib.Collections
                 secondRoot.Parent = firstRoot;
                 firstRoot.Rank += secondRoot.Rank;
             }
+        }
+        
+        private DisjointSetNode<T> Find(T value)
+        {
+            if (_nodes.TryGetValue(value, out DisjointSetNode<T> current))
+            {
+                if (current != current.Parent)
+                {
+                    current.Parent = Find(current.Parent.Value);
+                }
+                return current.Parent;
+            }
+            return null;
         }
     }
 }
