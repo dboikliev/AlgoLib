@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace AlgoLib.Trees
 {
-    public class KdTree<T> where T : IComparable<T>
+    public class KdTree<T>
     {
         private class KdTreeNode
         {
@@ -20,13 +20,20 @@ namespace AlgoLib.Trees
             }
         }
 
+        private readonly Comparison<T> _comparison;
         private readonly int _k;
         private readonly KdTreeNode _root;
-        
-        public KdTree(IEnumerable<T[]> elements, int k)
+
+        public KdTree(Comparison<T> comparison, IEnumerable<T[]> elements, int k)
         {
+            _comparison = comparison;
             _k = k;
             _root = ConstructTree(elements, k, 0);
+        }
+        
+        public KdTree(IEnumerable<T[]> elements, int k) 
+            : this(Comparer<T>.Default.Compare, elements, k)
+        {
         }
 
         public void Add(T[] element)
@@ -47,7 +54,7 @@ namespace AlgoLib.Trees
 
             while (current != null)
             {
-                int comparison = current.Value[axis].CompareTo(element[axis]);
+                int comparison = _comparison(current.Value[axis], element[axis]);
 
                 current = comparison <= 0 ? current.Left : current.Right;
                 
@@ -57,7 +64,7 @@ namespace AlgoLib.Trees
                 axis = depth % _k;
             }
 
-            if (parent.Value[axis].CompareTo(element[axis]) <= 0)
+            if (_comparison(parent.Value[axis], element[axis]) <= 0)
             {
                 parent.Left = new KdTreeNode(element);
             }
