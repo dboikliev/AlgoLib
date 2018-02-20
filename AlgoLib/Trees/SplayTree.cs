@@ -20,8 +20,7 @@ namespace AlgoLib.Trees
         }
 
         private readonly Comparison<T> _comparison;
-        
-        private SplayTreeNode Root { get; set; }
+        private SplayTreeNode _root;
 
         public SplayTree(Comparison<T> comparison)
         {
@@ -30,15 +29,15 @@ namespace AlgoLib.Trees
 
         private SplayTree(Comparison<T> comparison, SplayTreeNode root)
         {
-            Root = root;
+            _root = root;
             _comparison = comparison;
         }
 
         public void Add(T value)
         {
-            if (Root == null)
+            if (_root == null)
             {
-                Root = new SplayTreeNode(value);
+                _root = new SplayTreeNode(value);
                 return;
             }
 
@@ -47,13 +46,13 @@ namespace AlgoLib.Trees
             if (_comparison(closest.Value, value) == 0)
             {
                 Splay(closest);
-                Root = closest;
+                _root = closest;
                 return;
             }
 
             SplayTreeNode newNode = AddChild(closest, value);
             Splay(newNode);
-            Root = newNode;
+            _root = newNode;
         }
 
         public bool Contains(T value)
@@ -65,8 +64,119 @@ namespace AlgoLib.Trees
             }
 
             Splay(closest);
-            Root = closest;
+            _root = closest;
             return _comparison(closest.Value, value) == 0;
+        }
+
+
+        public void Delete(T value)
+        {
+            SplayTreeNode node = FindClosest(value);
+
+            Splay(node);
+            _root = node;
+            if (node != null && _comparison(node.Value, value) == 0)
+            {
+                if (node.Left == null)
+                {
+                    _root = node.Right;
+                    if (_root != null)
+                    {
+                        _root.Parent = null;
+                    }
+
+                    return;
+                }
+
+                if (node.Right == null)
+                {
+                    _root = node.Left;
+                    if (_root != null)
+                    {
+                        _root.Parent = null;
+                    }
+
+                    return;
+                }
+
+                node.Left.Parent = null;
+                node.Right.Parent = null;
+                _root = node.Left;
+                Merge(node.Right);
+            }
+        }
+
+        public (SplayTree<T> Left, SplayTree<T> Right) Split(T value)
+        {
+            SplayTreeNode root = FindClosest(value);
+            Splay(root);
+            _root = root;
+
+            if (root == null)
+            {
+                return (null, null);
+            }
+
+            int comparison = _comparison(root.Value, value);
+            if (comparison >= 0)
+            {
+                SplayTreeNode left = root.Left;
+                root.Left = null;
+                if (left != null)
+                {
+                    left.Parent = null;
+                }
+
+                return (new SplayTree<T>(_comparison, left), new SplayTree<T>(_comparison, root));
+            }
+
+            if (comparison < 0)
+            {
+                SplayTreeNode right = root.Right;
+                root.Right = null;
+                if (right != null)
+                {
+                    right.Parent = null;
+                }
+
+                return (new SplayTree<T>(_comparison, root), new SplayTree<T>(_comparison, right));
+            }
+
+            if (root.Left != null)
+            {
+                root.Left.Parent = null;
+            }
+
+            if (root.Right != null)
+            {
+                root.Right.Parent = null;
+            }
+
+            return (new SplayTree<T>(_comparison, root.Left), new SplayTree<T>(_comparison, root.Right));
+        }
+
+        public void Merge(SplayTree<T> other) => Merge(other._root);
+
+        private void Merge(SplayTreeNode node)
+        {
+            if (node == null) return;
+
+            if (_root == null)
+            {
+                _root = node;
+                return;
+            }
+
+            SplayTreeNode current = _root;
+            while (current.Right != null)
+            {
+                current = current.Right;
+            }
+
+            Splay(current);
+            _root = current;
+            current.Right = node;
+            node.Parent = current;
         }
 
         private SplayTreeNode AddChild(SplayTreeNode node, T value)
@@ -87,8 +197,8 @@ namespace AlgoLib.Trees
 
         private SplayTreeNode FindClosest(T value)
         {
-            SplayTreeNode parent = Root;
-            SplayTreeNode current = Root;
+            SplayTreeNode parent = _root;
+            SplayTreeNode current = _root;
             while (current != null)
             {
                 parent = current;
@@ -219,113 +329,5 @@ namespace AlgoLib.Trees
                 }
             }
         }
-
-        public void Delete(T value)
-        {
-            SplayTreeNode node = FindClosest(value);
-
-            Splay(node);
-            Root = node;
-            if (node != null && _comparison(node.Value, value) == 0)
-            {
-                if (node.Left == null)
-                {
-                    Root = node.Right;
-                    if (Root != null)
-                    {
-                        Root.Parent = null;
-                    }
-                    return;
-                }
-
-                if (node.Right == null)
-                {
-                    Root = node.Left;
-                    if (Root != null)
-                    {
-                        Root.Parent = null;
-                    }
-                    return;
-                }
-
-                node.Left.Parent = null;
-                node.Right.Parent = null;
-                Root = node.Left;
-                Merge(node.Right);
-            }
-        }
-
-        public (SplayTree<T> Left, SplayTree<T> Right) Split(T value)
-        {
-            SplayTreeNode root = FindClosest(value);
-            Splay(root);
-            Root = root;
-
-            if (root == null)
-            {
-                return (null, null);
-            }
-
-            int comparison = _comparison(root.Value, value);
-            if (comparison >= 0)
-            {
-                SplayTreeNode left = root.Left;
-                root.Left = null;
-                if (left != null)
-                {
-                    left.Parent = null;
-                }
-
-                return (new SplayTree<T>(_comparison, left), new SplayTree<T>(_comparison, root));
-            }
-
-            if (comparison < 0)
-            {
-                SplayTreeNode right = root.Right;
-                root.Right = null;
-                if (right != null)
-                {
-                    right.Parent = null;
-                }
-
-                return (new SplayTree<T>(_comparison, root), new SplayTree<T>(_comparison, right));
-            }
-
-            if (root.Left != null)
-            {
-                root.Left.Parent = null;
-            }
-
-            if (root.Right != null)
-            {
-                root.Right.Parent = null;
-            }
-
-            return (new SplayTree<T>(_comparison, root.Left), new SplayTree<T>(_comparison, root.Right));
-        }
-
-        private void Merge(SplayTreeNode node)
-        {
-            if (node == null) return;
-
-            if (Root == null)
-            {
-                Root = node;
-                return;
-            }
-
-            SplayTreeNode current = Root;
-            while (current.Right != null)
-            {
-                current = current.Right;
-            }
-            
-            Splay(current);
-            Root = current;
-            current.Right = node;
-            node.Parent = current;
-        }
-
-        public void Merge(SplayTree<T> other) => Merge(other.Root);
     }
 }
