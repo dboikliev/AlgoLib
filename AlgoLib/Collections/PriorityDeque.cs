@@ -185,9 +185,13 @@ namespace AlgoLib.Collections
                 if (_pointer > 1)
                 {
                     if (_comparison(_elements[_pointer].Min, _elements[_pointer / 2].Min) < 0)
+                    {
                         MinHeapify();
+                    }
                     else if (_comparison(_elements[_pointer].Max, _elements[_pointer / 2].Max) > 0)
+                    {
                         MaxHeapify();
+                    }
                 }
                 
             }
@@ -224,9 +228,11 @@ namespace AlgoLib.Collections
 
                 current /= 2;
             }
-            
+
             if (Count % 2 == 0)
+            {
                 _elements[_pointer].Min = _elements[_pointer].Max;
+            }
         }
 
         private void MinHeapify()
@@ -243,7 +249,9 @@ namespace AlgoLib.Collections
             }
 
             if (Count % 2 == 0)
+            {
                 _elements[_pointer].Max = _elements[_pointer].Min;
+            }
         }
     }
 }
