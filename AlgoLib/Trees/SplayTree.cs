@@ -1,10 +1,11 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace AlgoLib.Trees
 {
     public class SplayTree<T>
     {
-        public class SplayTreeNode
+        private class SplayTreeNode
         {
             public T Value { get; }
 
@@ -20,7 +21,7 @@ namespace AlgoLib.Trees
 
         private readonly Comparison<T> _comparison;
         
-        public SplayTreeNode Root { get; private set; }
+        private SplayTreeNode Root { get; set; }
 
         public SplayTree(Comparison<T> comparison)
         {
@@ -254,7 +255,7 @@ namespace AlgoLib.Trees
             }
         }
 
-        public (SplayTreeNode Left, SplayTreeNode Right) Split(T value)
+        public (SplayTree<T> Left, SplayTree<T> Right) Split(T value)
         {
             SplayTreeNode root = FindClosest(value);
             Splay(root);
@@ -275,7 +276,7 @@ namespace AlgoLib.Trees
                     left.Parent = null;
                 }
 
-                return (left, root);
+                return (new SplayTree<T>(_comparison, left), new SplayTree<T>(_comparison, root));
             }
 
             if (comparison < 0)
@@ -287,7 +288,7 @@ namespace AlgoLib.Trees
                     right.Parent = null;
                 }
 
-                return (root, right);
+                return (new SplayTree<T>(_comparison, root), new SplayTree<T>(_comparison, right));
             }
 
             if (root.Left != null)
@@ -300,29 +301,31 @@ namespace AlgoLib.Trees
                 root.Right.Parent = null;
             }
 
-            return (root.Left, root.Right);
+            return (new SplayTree<T>(_comparison, root.Left), new SplayTree<T>(_comparison, root.Right));
         }
 
-        public void Merge(SplayTreeNode other)
+        private void Merge(SplayTreeNode node)
         {
-            if (other == null) return;
+            if (node == null) return;
 
             if (Root == null)
             {
-                Root = other;
+                Root = node;
                 return;
             }
 
-            SplayTreeNode current = other;
-            while (current.Left != null)
+            SplayTreeNode current = Root;
+            while (current.Right != null)
             {
-                current = current.Left;
+                current = current.Right;
             }
-
+            
             Splay(current);
-            current.Left = Root;
-            Root.Parent = current;
             Root = current;
+            current.Right = node;
+            node.Parent = current;
         }
+
+        public void Merge(SplayTree<T> other) => Merge(other.Root);
     }
 }
