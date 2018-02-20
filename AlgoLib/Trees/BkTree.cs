@@ -9,16 +9,16 @@ namespace AlgoLib.Trees
     /// Burkhard-Keller tree. Suitable for elements which for a metric spece.
     /// </summary>
     /// <typeparam name="T">The type of the elements.</typeparam>
-    public class BKTree<T>
+    public class BkTree<T>
     {
         private readonly Metric<T> _metric;
-        private BKTreeNode<T> _root;
+        private BkTreeNode<T> _root;
 
         /// <summary>
         /// Constructs a Bukhard-Keller tree.
         /// </summary>
         /// <param name="metric">A function which is a metric on <typeparamref name="T"/>.</param>
-        public BKTree(Metric<T> metric): 
+        public BkTree(Metric<T> metric): 
             this(metric, Enumerable.Empty<T>())
         {
         }
@@ -28,7 +28,7 @@ namespace AlgoLib.Trees
         /// </summary>
         /// <param name="metric">A function which is a metric on <typeparamref name="T"/>.</param>
         /// <param name="elements">Elements to be added to the tree.</param>
-        public BKTree(Metric<T> metric, params T[] elements): 
+        public BkTree(Metric<T> metric, params T[] elements): 
             this(metric, elements as IEnumerable<T>)
         {
         }
@@ -38,7 +38,7 @@ namespace AlgoLib.Trees
         /// </summary>
         /// <param name="metric">A function which is a metric on <typeparamref name="T"/>.</param>
         /// <param name="elements">Elements to be added to the tree.</param>
-        public BKTree(Metric<T> metric, IEnumerable<T> elements)
+        public BkTree(Metric<T> metric, IEnumerable<T> elements)
         {
             _metric = metric;
             foreach (var element in elements)
@@ -52,10 +52,10 @@ namespace AlgoLib.Trees
         /// </summary>
         /// <param name="value">The element to add.</param>
         /// <returns>The tree.</returns>
-        public BKTree<T> Add(T value)
+        public BkTree<T> Add(T value)
         {
             if (_root == null)
-                _root = new BKTreeNode<T>(value, _metric);
+                _root = new BkTreeNode<T>(value, _metric);
             else
                 _root.Add(value);
 

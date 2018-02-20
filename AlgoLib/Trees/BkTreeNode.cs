@@ -7,14 +7,14 @@ namespace AlgoLib.Trees
     /// Represents a not in a Bukhard-Keller tree.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class BKTreeNode<T>
+    public class BkTreeNode<T>
     {
         private readonly Metric<T> _metric;
         private T Value { get; }
 
-        private SortedDictionary<int, BKTreeNode<T>> _children = new SortedDictionary<int, BKTreeNode<T>>();
+        private SortedDictionary<int, BkTreeNode<T>> _children = new SortedDictionary<int, BkTreeNode<T>>();
         
-        public BKTreeNode(T value, Metric<T> metric)
+        public BkTreeNode(T value, Metric<T> metric)
         {
             _metric = metric;
             Value = value;
@@ -26,7 +26,7 @@ namespace AlgoLib.Trees
         /// </summary>
         /// <param name="value">The value of the child node.</param>
         /// <returns>The node.</returns>
-        public BKTreeNode<T> Add(T value)
+        public BkTreeNode<T> Add(T value)
         {
             var current = this;
             var distance = _metric(current.Value, value);
@@ -35,7 +35,7 @@ namespace AlgoLib.Trees
                 current = child;
             }
             
-            current._children[distance] = new BKTreeNode<T>(value, _metric);
+            current._children[distance] = new BkTreeNode<T>(value, _metric);
 
             return this;
         }
@@ -49,22 +49,22 @@ namespace AlgoLib.Trees
         /// <returns>The elements within distance of <paramref name="maxDistance"/> from <paramref name="value"/>.</returns>
         public IEnumerable<T> Query(T value, int maxDistance)
         {
-            var queue = new Queue<BKTreeNode<T>>();
+            var queue = new Queue<BkTreeNode<T>>();
             queue.Enqueue(this);
 
             while (queue.Count > 0)
             {
-                BKTreeNode<T> current = queue.Dequeue();
+                BkTreeNode<T> current = queue.Dequeue();
 
                 if (_metric(value, current.Value) <= maxDistance)
                 {
                     yield return current.Value;
-                    IEnumerable<BKTreeNode<T>> potentialChildren = current._children
+                    IEnumerable<BkTreeNode<T>> potentialChildren = current._children
                         .Where(k => k.Key <= _metric(value, current.Value) + maxDistance ||
                                     k.Key >= _metric(value, current.Value) - maxDistance)
                         .Select(k => k.Value);
                     
-                    foreach (BKTreeNode<T> child in potentialChildren)
+                    foreach (BkTreeNode<T> child in potentialChildren)
                     {
                         queue.Enqueue(child);
                     }
