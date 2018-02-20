@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace AlgoLib.Trees
+namespace AlgoLib.Collections
 {
     public class KdTree<T>
     {

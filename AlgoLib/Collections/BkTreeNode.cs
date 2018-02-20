@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace AlgoLib.Trees
+namespace AlgoLib.Collections
 {
     /// <summary>
     /// Represents a not in a Bukhard-Keller tree.

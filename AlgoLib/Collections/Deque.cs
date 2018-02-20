@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AlgoLib.Queues
+namespace AlgoLib.Collections
 {
     public class Deque<T>
     {

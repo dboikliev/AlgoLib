@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
 
-namespace AlgoLib.Queues
+namespace AlgoLib.Collections
 {
     public class PriorityDeque<T>
     {

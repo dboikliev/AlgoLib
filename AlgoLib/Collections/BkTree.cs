@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace AlgoLib.Trees
+namespace AlgoLib.Collections
 {
     public delegate int Metric<T>(T a, T b);
     

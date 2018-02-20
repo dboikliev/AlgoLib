@@ -1,6 +1,5 @@
 ﻿using System;
-using AlgoLib.Queues;
-using AlgoLib.Trees;
+using AlgoLib.Collections;
 
 namespace AlgoLib.TestClient
 {

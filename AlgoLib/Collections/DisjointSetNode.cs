@@ -1,4 +1,4 @@
-﻿namespace AlgoLib.Sets
+﻿namespace AlgoLib.Collections
 {
     public class DisjointSetNode<T>
     {

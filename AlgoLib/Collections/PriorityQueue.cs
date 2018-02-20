@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using AlgoLib.Extensions;
 
-namespace AlgoLib.Queues
+namespace AlgoLib.Collections
 {
     public class PriorityQueue<T>
     {

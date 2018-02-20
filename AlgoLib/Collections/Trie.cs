@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgoLib.Trees
+namespace AlgoLib.Collections
 {
     public class Trie
     {

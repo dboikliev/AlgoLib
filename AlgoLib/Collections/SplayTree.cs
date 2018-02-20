@@ -1,7 +1,6 @@
 ﻿using System;
-using System.ComponentModel;
 
-namespace AlgoLib.Trees
+namespace AlgoLib.Collections
 {
     public class SplayTree<T>
     {

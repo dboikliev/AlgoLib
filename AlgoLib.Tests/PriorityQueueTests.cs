@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AlgoLib.Queues;
+using AlgoLib.Collections;
 using Xunit;
 
 namespace AlgoLib.Tests

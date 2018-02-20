@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlgoLib.Sets
+namespace AlgoLib.Collections
 {
     public class DisjointSet<T>
     {
