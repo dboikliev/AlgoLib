@@ -17,7 +17,7 @@ namespace AlgoLib.Trees
             }
         }
         
-        private TrieNode _root;
+        private readonly TrieNode _root;
 
         public Trie()
         {
@@ -101,6 +101,7 @@ namespace AlgoLib.Trees
                 node = child;
                 index++;
             }
+            
             node.IsWord = true;
         }
     }
