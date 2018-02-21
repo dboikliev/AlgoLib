@@ -15,3 +15,5 @@ A library of data structures which are not provided by .NET Framework.
 * [Priority queue](https://en.wikipedia.org/wiki/Priority_queue)
 * [Deque (double-ended queue)](https://en.wikipedia.org/wiki/Double-ended_queue)
 * [Priority deque (double-ended priority queue)](https://en.wikipedia.org/wiki/Double-ended_priority_queue)
+* [Splay Tree](https://en.m.wikipedia.org/wiki/Splay_tree)
+
