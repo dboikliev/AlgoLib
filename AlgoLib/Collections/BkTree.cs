@@ -3,36 +3,58 @@ using System.Linq;
 
 namespace AlgoLib.Collections
 {
-    public delegate int Metric<T>(T a, T b);
-    
     /// <summary>
-    /// Burkhard-Keller tree. Suitable for elements which for a metric spece.
+    /// A function that defines a distance between each pair of elements of a space.
+    /// From <see cref="!:https://en.wikipedia.org/wiki/Metric_(mathematics)"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of elements in the set.</typeparam>
+    /// <param name="a">First element.</param>
+    /// <param name="b">Second element.</param>
+    /// <returns>Metric distance between the two elements.</returns>
+    public delegate int Metric<in T>(T a, T b);
+
+    /// <summary>
+    /// Burkhard-Keller tree. Suitable for elements which form a metric spece.
     /// </summary>
     /// <typeparam name="T">The type of the elements.</typeparam>
     public class BkTree<T>
     {
+        private class BkTreeNode
+        {
+            public T Value { get; }
+
+            public SortedDictionary<int, BkTreeNode> Children { get; } = new SortedDictionary<int, BkTreeNode>();
+
+            public BkTreeNode(T value)
+            {
+                Value = value;
+            }
+
+
+        }
+
         private readonly Metric<T> _metric;
-        private BkTreeNode<T> _root;
+        private BkTreeNode _root;
 
         /// <summary>
         /// Constructs a Bukhard-Keller tree.
         /// </summary>
         /// <param name="metric">A function which is a metric on <typeparamref name="T"/>.</param>
-        public BkTree(Metric<T> metric): 
+        public BkTree(Metric<T> metric) :
             this(metric, Enumerable.Empty<T>())
         {
         }
-        
+
         /// <summary>
         /// Constructs a Bukhard-Keller tree.
         /// </summary>
         /// <param name="metric">A function which is a metric on <typeparamref name="T"/>.</param>
         /// <param name="elements">Elements to be added to the tree.</param>
-        public BkTree(Metric<T> metric, params T[] elements): 
+        public BkTree(Metric<T> metric, params T[] elements) :
             this(metric, elements as IEnumerable<T>)
         {
         }
-        
+
         /// <summary>
         /// Constructs a Bukhard-Keller tree.
         /// </summary>
@@ -46,7 +68,9 @@ namespace AlgoLib.Collections
                 Add(element);
             }
         }
-        
+
+
+
         /// <summary>
         /// Adds an element to the tree.
         /// </summary>
@@ -55,9 +79,20 @@ namespace AlgoLib.Collections
         public BkTree<T> Add(T value)
         {
             if (_root == null)
-                _root = new BkTreeNode<T>(value, _metric);
+            {
+                _root = new BkTreeNode(value);
+            }
             else
-                _root.Add(value);
+            {
+                BkTreeNode current = _root;
+                int distance = _metric(current.Value, value);
+                while (current.Children.TryGetValue(distance, out BkTreeNode child))
+                {
+                    current = child;
+                }
+
+                current.Children[distance] = new BkTreeNode(value);
+            }
 
             return this;
         }
@@ -71,7 +106,27 @@ namespace AlgoLib.Collections
         /// <returns>The elements within distance of <paramref name="maxDistance"/> from <paramref name="value"/>.</returns>
         public IEnumerable<T> Query(T value, int maxDistance)
         {
-            return _root.Query(value, maxDistance);
+            var queue = new Queue<BkTreeNode>();
+            queue.Enqueue(_root);
+
+            while (queue.Count > 0)
+            {
+                BkTreeNode current = queue.Dequeue();
+
+                if (_metric(value, current.Value) <= maxDistance)
+                {
+                    yield return current.Value;
+                    IEnumerable<BkTreeNode> potentialChildren = current.Children
+                        .Where(k => k.Key <= _metric(value, current.Value) + maxDistance ||
+                                    k.Key >= _metric(value, current.Value) - maxDistance)
+                        .Select(k => k.Value);
+
+                    foreach (BkTreeNode child in potentialChildren)
+                    {
+                        queue.Enqueue(child);
+                    }
+                }
+            }
         }
     }
 }
