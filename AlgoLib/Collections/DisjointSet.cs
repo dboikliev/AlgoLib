@@ -5,9 +5,9 @@ namespace AlgoLib.Collections
 {
     public class DisjointSet<T>
     {
-        private class DisjointSetNode<T>
+        private class DisjointSetNode
         {
-            public DisjointSetNode<T> Parent { get; set; }
+            public DisjointSetNode Parent { get; set; }
             public int Rank { get; set; } = 1;
             public T Value { get; }
 
@@ -16,8 +16,8 @@ namespace AlgoLib.Collections
                 Value = value;
             }
         }
-        
-        private Dictionary<T, DisjointSetNode<T>> _nodes = new Dictionary<T, DisjointSetNode<T>>();
+
+        private readonly Dictionary<T, DisjointSetNode> _nodes = new Dictionary<T, DisjointSetNode>();
 
         public void MakeSet(T value)
         {
@@ -26,7 +26,7 @@ namespace AlgoLib.Collections
                 throw new Exception("Set already exists");
             }
 
-            var node = new DisjointSetNode<T>(value);
+            var node = new DisjointSetNode(value);
             node.Parent = node;
             _nodes[value] = node;
         }
@@ -57,10 +57,10 @@ namespace AlgoLib.Collections
                 firstRoot.Rank += secondRoot.Rank;
             }
         }
-        
-        private DisjointSetNode<T> Find(T value)
+
+        private DisjointSetNode Find(T value)
         {
-            if (_nodes.TryGetValue(value, out DisjointSetNode<T> current))
+            if (_nodes.TryGetValue(value, out DisjointSetNode current))
             {
                 if (current != current.Parent)
                 {
@@ -68,6 +68,7 @@ namespace AlgoLib.Collections
                 }
                 return current.Parent;
             }
+
             return null;
         }
     }

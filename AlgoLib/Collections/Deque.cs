@@ -14,7 +14,9 @@ namespace AlgoLib.Collections
         public Deque(int capacity = InitialCapacity)
         {
             if (capacity <= 0)
+            {
                 throw new ArgumentOutOfRangeException(nameof(capacity), capacity, $"{nameof(capacity)} must be a positive number.");
+            }
 
             _elements = new T[capacity];
         }
@@ -22,10 +24,14 @@ namespace AlgoLib.Collections
         public Deque<T> EnqueueFirst(T value)
         {
             if (Count + 1 >= _elements.Length)
+            {
                 Resize();
+            }
 
             if (Count > 0)
+            {
                 _head = _head > 0 ? _head - 1 : _elements.Length - 1;
+            }
 
             _elements[_head] = value;
             Count++;
@@ -80,7 +86,9 @@ namespace AlgoLib.Collections
             Count--;
 
             if (Count > 0)
+            {
                 _tail = _tail > 0 ? _tail - 1 : _elements.Length - 1;
+            }
 
             return result;
         }
