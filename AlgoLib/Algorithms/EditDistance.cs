@@ -63,6 +63,6 @@ namespace AlgoLib.Algorithms
             return a.Zip(b, (cA, cB) => cA == cB ? 0 : 1).Sum();
         }
 
-        private static int Min(params int[] numbers) => numbers.Min();
+        private static int Min(int a, int b, int c) => Math.Min(Math.Min(a, b), c);
     }
 }
