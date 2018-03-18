@@ -23,14 +23,9 @@ namespace AlgoLib.Collections
         {
             public T Value { get; }
 
-            public SortedDictionary<int, BkTreeNode> Children { get; } = new SortedDictionary<int, BkTreeNode>();
+            public Dictionary<int, BkTreeNode> Children { get; } = new Dictionary<int, BkTreeNode>();
 
-            public BkTreeNode(T value)
-            {
-                Value = value;
-            }
-
-
+            public BkTreeNode(T value) => Value = value;
         }
 
         private readonly Metric<T> _metric;
@@ -85,8 +80,8 @@ namespace AlgoLib.Collections
             else
             {
                 BkTreeNode current = _root;
-                int distance = _metric(current.Value, value);
-                while (current.Children.TryGetValue(distance, out BkTreeNode child))
+                int distance;
+                while (current.Children.TryGetValue(distance = _metric(current.Value, value), out BkTreeNode child))
                 {
                     current = child;
                 }
@@ -113,18 +108,20 @@ namespace AlgoLib.Collections
             {
                 BkTreeNode current = queue.Dequeue();
 
-                if (_metric(value, current.Value) <= maxDistance)
+                int distance = _metric(value, current.Value);
+                if (distance <= maxDistance)
                 {
                     yield return current.Value;
-                    IEnumerable<BkTreeNode> potentialChildren = current.Children
-                        .Where(k => k.Key <= _metric(value, current.Value) + maxDistance ||
-                                    k.Key >= _metric(value, current.Value) - maxDistance)
-                        .Select(k => k.Value);
+                }
+                
+                IEnumerable<BkTreeNode> potentialChildren = current.Children
+                    .Where(k => k.Key >= distance - maxDistance &&
+                                k.Key <= distance + maxDistance)
+                    .Select(k => k.Value);
 
-                    foreach (BkTreeNode child in potentialChildren)
-                    {
-                        queue.Enqueue(child);
-                    }
+                foreach (BkTreeNode child in potentialChildren)
+                {
+                    queue.Enqueue(child);
                 }
             }
         }
